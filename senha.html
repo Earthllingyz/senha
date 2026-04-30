@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Acesso Restrito</title>
     <style>
-        /* Centraliza tudo na tela */
+        /* Centraliza o card de login na tela */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f0f2f5;
@@ -16,7 +16,6 @@
             margin: 0;
         }
 
-        /* Estilo do Card de Login */
         #caixa-login {
             background-color: #ffffff;
             padding: 40px;
@@ -29,28 +28,18 @@
         h2 {
             margin-bottom: 25px;
             color: #1c1e21;
-            font-size: 24px;
         }
 
-        /* Estilo dos Inputs */
         input {
             width: 100%;
             padding: 12px;
             margin-bottom: 15px;
             border: 1px solid #dddfe2;
             border-radius: 6px;
-            box-sizing: border-box; /* Garante que o padding não aumente o tamanho do input */
+            box-sizing: border-box;
             font-size: 16px;
-            transition: border-color 0.3s;
         }
 
-        input:focus {
-            border-color: #1877f2;
-            outline: none;
-            box-shadow: 0 0 0 2px #e7f3ff;
-        }
-
-        /* Estilo do Botão */
         button {
             width: 100%;
             padding: 12px;
@@ -61,32 +50,17 @@
             font-size: 18px;
             font-weight: bold;
             cursor: pointer;
-            transition: background-color 0.3s;
         }
 
         button:hover {
             background-color: #166fe5;
         }
 
-        /* Mensagem de Erro */
         #mensagem-erro {
             color: #fa3e3e;
             font-size: 14px;
             margin-top: 15px;
-            display: none;
-        }
-
-        /* Mensagem de Sucesso (Centralizada) */
-        h1#sucesso {
-            display: none;
-            color: #2b9217;
-            text-align: center;
-            animation: fadeIn 0.5s ease-in;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            display: none; /* Começa escondido */
         }
     </style>
 </head>
@@ -100,9 +74,9 @@
         <p id="mensagem-erro">Usuário ou senha incorretos!</p>
     </div>
 
-    <h1 id="sucesso">🎉 Bem-vindo! Acesso Liberado.</h1>
-
+    <!-- O JAVASCRIPT PRECISA ESTAR AQUI DENTRO -->
     <script>
+        // Banco de dados de usuários
         const usuariosRegistrados = {
             "joao": "1234",
             "maria": "5678",
@@ -112,7 +86,7 @@
         const inputUsuario = document.getElementById("campo-usuario");
         const inputSenha = document.getElementById("campo-senha");
 
-        // Atalho para o Enter
+        // Função para verificar se a tecla Enter foi pressionada
         [inputUsuario, inputSenha].forEach(campo => {
             campo.addEventListener("keyup", (event) => {
                 if (event.key === "Enter") verificarAcesso();
@@ -124,15 +98,18 @@
             let senha = inputSenha.value;
             let msgErro = document.getElementById("mensagem-erro");
 
+            // Verifica se o usuário existe e se a senha está correta
             if (usuariosRegistrados[usuario] && usuariosRegistrados[usuario] === senha) {
-                document.getElementById("caixa-login").style.display = "none";
-                document.getElementById("sucesso").style.display = "block";
+                // REDIRECIONA PARA O HOME.HTML
+                window.location.href = "home.html"; 
             } else {
+                // Mostra a mensagem de erro e limpa o campo de senha
                 msgErro.style.display = "block";
                 inputSenha.value = "";
-                inputSenha.focus(); // Coloca o cursor de volta na senha
+                inputSenha.focus();
             }
         }
     </script>
 
 </body>
+</html>
