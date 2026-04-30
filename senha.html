@@ -6,37 +6,49 @@
 <body>
 
     <div id="caixa-login">
-        <h2>Digite a Senha</h2>
-        <!-- Adicionamos o id para o JavaScript encontrar o input -->
-        <input type="password" id="campo-senha">
-        <button onclick="verificarSenha()">Entrar</button>
-        <p id="mensagem-erro" style="display: none;">Senha errada!</p>
+        <h2>Login</h2>
+        <!-- Campo para o nome do usuário -->
+        <input type="text" id="campo-usuario" placeholder="Usuário">
+        <br>
+        <!-- Campo para a senha -->
+        <input type="password" id="campo-senha" placeholder="Senha">
+        <br>
+        <button onclick="verificarAcesso()">Entrar</button>
+        <p id="mensagem-erro" style="display: none; color: red;">Usuário ou senha incorretos!</p>
     </div>
 
-    <h1 id="sucesso" style="display: none;">Você conseguiu!</h1>
+    <h1 id="sucesso" style="display: none;">Bem-vindo! Você conseguiu entrar.</h1>
 
     <script>
-        // Pega o elemento do input
+        // 1. "Banco de dados" simples com usuários registrados
+        const usuariosRegistrados = {
+            "joao": "1234",
+            "maria": "5678",
+            "admin": "admin123"
+        };
+
+        const inputUsuario = document.getElementById("campo-usuario");
         const inputSenha = document.getElementById("campo-senha");
 
-        // Escuta quando uma tecla é solta (keyup)
-        inputSenha.addEventListener("keyup", function(event) {
-            // Se a tecla for "Enter" (código 13 ou nome "Enter")
-            if (event.key === "Enter") {
-                verificarSenha();
-            }
+        // Permitir dar Enter em qualquer um dos campos
+        [inputUsuario, inputSenha].forEach(campo => {
+            campo.addEventListener("keyup", function(event) {
+                if (event.key === "Enter") verificarAcesso();
+            });
         });
 
-        function verificarSenha() {
-            const senhaCorreta = "1234";
-            let tentativa = inputSenha.value;
+        function verificarAcesso() {
+            let usuario = inputUsuario.value;
+            let senha = inputSenha.value;
+            let msgErro = document.getElementById("mensagem-erro");
 
-            if (tentativa === senhaCorreta) {
+            // 2. Validação: Verifica se o usuário existe E se a senha bate
+            if (usuariosRegistrados[usuario] && usuariosRegistrados[usuario] === senha) {
                 document.getElementById("caixa-login").style.display = "none";
                 document.getElementById("sucesso").style.display = "block";
             } else {
-                document.getElementById("mensagem-erro").style.display = "block";
-                inputSenha.value = "";
+                msgErro.style.display = "block";
+                inputSenha.value = ""; // Limpa apenas a senha por conveniência
             }
         }
     </script>
