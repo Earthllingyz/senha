@@ -1,26 +1,108 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-br">
 <head>
-    <title>Acesso</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Acesso Restrito</title>
+    <style>
+        /* Centraliza tudo na tela */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        /* Estilo do Card de Login */
+        #caixa-login {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+            width: 320px;
+            text-align: center;
+        }
+
+        h2 {
+            margin-bottom: 25px;
+            color: #1c1e21;
+            font-size: 24px;
+        }
+
+        /* Estilo dos Inputs */
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1px solid #dddfe2;
+            border-radius: 6px;
+            box-sizing: border-box; /* Garante que o padding não aumente o tamanho do input */
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus {
+            border-color: #1877f2;
+            outline: none;
+            box-shadow: 0 0 0 2px #e7f3ff;
+        }
+
+        /* Estilo do Botão */
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #1877f2;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #166fe5;
+        }
+
+        /* Mensagem de Erro */
+        #mensagem-erro {
+            color: #fa3e3e;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        /* Mensagem de Sucesso (Centralizada) */
+        h1#sucesso {
+            display: none;
+            color: #2b9217;
+            text-align: center;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
 </head>
 <body>
 
     <div id="caixa-login">
-        <h2>Login</h2>
-        <!-- Campo para o nome do usuário -->
+        <h2>Acesse sua conta</h2>
         <input type="text" id="campo-usuario" placeholder="Usuário">
-        <br>
-        <!-- Campo para a senha -->
         <input type="password" id="campo-senha" placeholder="Senha">
-        <br>
         <button onclick="verificarAcesso()">Entrar</button>
-        <p id="mensagem-erro" style="display: none; color: red;">Usuário ou senha incorretos!</p>
+        <p id="mensagem-erro">Usuário ou senha incorretos!</p>
     </div>
 
-    <h1 id="sucesso" style="display: none;">Bem-vindo! Você conseguiu entrar.</h1>
+    <h1 id="sucesso">🎉 Bem-vindo! Acesso Liberado.</h1>
 
     <script>
-        // 1. "Banco de dados" simples com usuários registrados
         const usuariosRegistrados = {
             "joao": "1234",
             "maria": "5678",
@@ -30,9 +112,9 @@
         const inputUsuario = document.getElementById("campo-usuario");
         const inputSenha = document.getElementById("campo-senha");
 
-        // Permitir dar Enter em qualquer um dos campos
+        // Atalho para o Enter
         [inputUsuario, inputSenha].forEach(campo => {
-            campo.addEventListener("keyup", function(event) {
+            campo.addEventListener("keyup", (event) => {
                 if (event.key === "Enter") verificarAcesso();
             });
         });
@@ -42,16 +124,15 @@
             let senha = inputSenha.value;
             let msgErro = document.getElementById("mensagem-erro");
 
-            // 2. Validação: Verifica se o usuário existe E se a senha bate
             if (usuariosRegistrados[usuario] && usuariosRegistrados[usuario] === senha) {
                 document.getElementById("caixa-login").style.display = "none";
                 document.getElementById("sucesso").style.display = "block";
             } else {
                 msgErro.style.display = "block";
-                inputSenha.value = ""; // Limpa apenas a senha por conveniência
+                inputSenha.value = "";
+                inputSenha.focus(); // Coloca o cursor de volta na senha
             }
         }
     </script>
 
 </body>
-</html>
