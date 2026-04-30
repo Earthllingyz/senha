@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Acesso</title>
+</head>
+<body>
+
+    <div id="caixa-login">
+        <h2>Digite a Senha</h2>
+        <!-- Adicionamos o id para o JavaScript encontrar o input -->
+        <input type="password" id="campo-senha">
+        <button onclick="verificarSenha()">Entrar</button>
+        <p id="mensagem-erro" style="display: none;">Senha errada!</p>
+    </div>
+
+    <h1 id="sucesso" style="display: none;">Você conseguiu!</h1>
+
+    <script>
+        // Pega o elemento do input
+        const inputSenha = document.getElementById("campo-senha");
+
+        // Escuta quando uma tecla é solta (keyup)
+        inputSenha.addEventListener("keyup", function(event) {
+            // Se a tecla for "Enter" (código 13 ou nome "Enter")
+            if (event.key === "Enter") {
+                verificarSenha();
+            }
+        });
+
+        function verificarSenha() {
+            const senhaCorreta = "1234";
+            let tentativa = inputSenha.value;
+
+            if (tentativa === senhaCorreta) {
+                document.getElementById("caixa-login").style.display = "none";
+                document.getElementById("sucesso").style.display = "block";
+            } else {
+                document.getElementById("mensagem-erro").style.display = "block";
+                inputSenha.value = "";
+            }
+        }
+    </script>
+
+</body>
+</html>
